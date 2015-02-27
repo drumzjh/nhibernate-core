@@ -78,7 +78,7 @@ namespace NHibernate.Test.NHSpecificTest.NH1632
 
 
 		[Test]
-		public void When_commiting_items_in_DTC_transaction_will_add_items_to_2nd_level_cache()
+		public void When_committing_items_in_DTC_transaction_will_add_items_to_2nd_level_cache()
 		{
 			using (var tx = new TransactionScope())
 			{
