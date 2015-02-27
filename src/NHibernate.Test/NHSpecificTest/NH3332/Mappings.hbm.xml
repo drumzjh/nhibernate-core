@@ -8,6 +8,9 @@
 			</key-many-to-one>
 			<key-many-to-one name="State" column="Id" access="field.camelcase-underscore" />
 		</composite-id>
+		<version name="RowVersionId" access="field.camelcase-underscore" generated="always" unsaved-value="null" type="BinaryBlob">
+			<column name="RowVersionId" not-null="false" sql-type="timestamp"/>
+		</version>
 		<property name="Description" column="Description" access="field.camelcase-underscore"/>
 	</class>
 
