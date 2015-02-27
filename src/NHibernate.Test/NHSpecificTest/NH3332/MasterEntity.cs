@@ -9,7 +9,6 @@ namespace NHibernate.Test.NHSpecificTest.NH3332
 		private Int32 _id;
 		private DateTime? _lastModifiedTimeStamp;
 		private String _name;
-		private Byte[] _rowVersionId;
 
 		public override int GetHashCode()
 		{
@@ -46,12 +45,7 @@ namespace NHibernate.Test.NHSpecificTest.NH3332
 			set { _name = value; }
 		}
 
-		public virtual Byte[] RowVersionId
-		{
-			get { return _rowVersionId; }
-		}
-
-		public virtual DataType DataType
+	    public virtual DataType DataType
 		{
 			get { return _dataType; }
 			set { _dataType = value; }
