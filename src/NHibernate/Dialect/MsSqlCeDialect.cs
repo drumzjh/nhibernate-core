@@ -72,6 +72,7 @@ namespace NHibernate.Dialect
 
 			DefaultProperties[Environment.ConnectionDriver] = "NHibernate.Driver.SqlServerCeDriver";
 			DefaultProperties[Environment.PrepareSql] = "false";
+			DefaultProperties[Environment.ReleaseConnections] = "on_close";
 		}
 
 		public override string AddColumnString

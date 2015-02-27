@@ -90,7 +90,7 @@ namespace NHibernate.Mapping
 
 		public bool IsIdentityColumn(Dialect.Dialect dialect)
 		{
-			return IdentifierGeneratorFactory.GetIdentifierGeneratorClass(identifierGeneratorStrategy, dialect) == typeof (IdentityGenerator);
+			return typeof (IdentityGenerator).IsAssignableFrom(IdentifierGeneratorFactory.GetIdentifierGeneratorClass(identifierGeneratorStrategy, dialect));
 		}
 
 		public string NullValue
