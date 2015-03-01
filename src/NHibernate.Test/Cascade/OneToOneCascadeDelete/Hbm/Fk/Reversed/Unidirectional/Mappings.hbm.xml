@@ -11,6 +11,7 @@
 					column="Info_id"
 					unique="true"
 					cascade="all,delete-orphan" />
+		<property name="Name" />
 	</class>
 
 	<class name="EmployeeInfo">

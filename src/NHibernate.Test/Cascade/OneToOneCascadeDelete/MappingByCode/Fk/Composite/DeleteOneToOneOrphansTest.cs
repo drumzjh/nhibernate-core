@@ -27,6 +27,7 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.MappingByCode.Fk.Composi
 					map.Cascade(Mapping.ByCode.Cascade.All | Mapping.ByCode.Cascade.DeleteOrphans);
 					map.NotFound(NotFoundMode.Exception);
 				});
+				mc.Property(x => x.Name);
 			});
 
 			mapper.Class<EmployeeInfo>(mc =>
@@ -47,7 +48,7 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.MappingByCode.Fk.Composi
 			using (var s = OpenSession())
 			using (var t = s.BeginTransaction())
 			{
-				var emp = new Employee();
+				var emp = new Employee { Name = "Julius Caesar" };
 				emp.Info = new EmployeeInfo( 1L, 1L);
 
 				s.Save(emp.Info);

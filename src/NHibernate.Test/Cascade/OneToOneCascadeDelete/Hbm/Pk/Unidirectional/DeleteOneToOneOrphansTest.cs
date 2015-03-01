@@ -22,7 +22,7 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Hbm.Pk.Unidirectional
 			using (var s = OpenSession())
 			using (var t = s.BeginTransaction())
 			{
-				var emp = new Employee();
+				var emp = new Employee { Name = "Julius Caesar" };
 				s.Save(emp);
 				var info = new EmployeeInfo(emp.Id);
 				emp.Info = info;

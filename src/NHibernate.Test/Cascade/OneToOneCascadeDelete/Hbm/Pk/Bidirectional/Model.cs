@@ -3,6 +3,7 @@
 	public class Employee
 	{
 		public virtual long Id { get; set; }
+		public virtual string Name { get; set; }
 		public virtual EmployeeInfo Info { get; set; }
 
 		public Employee()

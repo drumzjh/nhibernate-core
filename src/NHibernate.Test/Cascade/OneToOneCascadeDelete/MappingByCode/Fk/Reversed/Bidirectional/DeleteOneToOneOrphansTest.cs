@@ -22,8 +22,8 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.MappingByCode.Fk.Reverse
 					map.Column("Info_id");
 					map.Unique(true);
 					map.Cascade(Mapping.ByCode.Cascade.All | Mapping.ByCode.Cascade.DeleteOrphans);
-
 				});
+				mc.Property(x => x.Name);
 			});
 
 			mapper.Class<EmployeeInfo>(cm =>
@@ -48,7 +48,7 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.MappingByCode.Fk.Reverse
 			using (var s = OpenSession())
 			using (var t = s.BeginTransaction())
 			{
-				var emp = new Employee();
+				var emp = new Employee { Name = "Julius Caesar" };
 				emp.Info = new EmployeeInfo(emp);
 
 				s.Save(emp);

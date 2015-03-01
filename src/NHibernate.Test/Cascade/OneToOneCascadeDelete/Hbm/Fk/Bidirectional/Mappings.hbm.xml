@@ -12,6 +12,7 @@
 					class="EmployeeInfo"
 					constrained="false"
 					cascade="all,delete-orphan" />
+		<property name="Name" />
 	</class>
 
 	<class name="EmployeeInfo">

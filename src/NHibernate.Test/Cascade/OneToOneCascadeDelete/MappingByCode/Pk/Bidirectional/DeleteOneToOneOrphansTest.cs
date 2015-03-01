@@ -22,6 +22,7 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.MappingByCode.Pk.Bidirec
 					map.Cascade(Mapping.ByCode.Cascade.All | Mapping.ByCode.Cascade.DeleteOrphans);
 					map.Constrained(false);
 				});
+				mc.Property(x => x.Name);
 			});
 
 			mapper.Class<EmployeeInfo>(mc =>
@@ -46,7 +47,7 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.MappingByCode.Pk.Bidirec
 			using (var s = OpenSession())
 			using (var t = s.BeginTransaction())
 			{
-				var emp = new Employee();
+				var emp = new Employee { Name = "Julius Caesar" };
 				emp.Info = new EmployeeInfo(emp);
 
 				s.Save(emp);
