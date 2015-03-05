@@ -1,20 +1,17 @@
 using System.Collections;
+using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 
-namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Unidirectional.Hbm
+namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Unidirectional
 {
-	[TestFixture]
-	public class DeleteOneToOneOrphansTest : TestCase
+	public abstract class DeleteOneToOneOrphansTest : TestCase
 	{
 		protected override string MappingsAssembly
 		{
 			get { return "NHibernate.Test"; }
 		}
 
-		protected override IList Mappings
-		{
-			get { return new string[] { "Cascade.OneToOneCascadeDelete.Hbm.Pk.Unidirectional.Mappings.hbm.xml" }; }
-		}
 
 		protected override void OnSetUp()
 		{
@@ -93,6 +90,54 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Unidirectional.Hbm
 
 				tx.Commit();
 			}
+		}
+	}
+
+	[TestFixture]
+	public class DeleteOneToOneOrphansTestHbm : DeleteOneToOneOrphansTest
+	{
+		protected override IList Mappings
+		{
+			get { return new[] { "Cascade.OneToOneCascadeDelete.Pk.Unidirectional.Mappings.hbm.xml" }; }
+		}
+	}
+
+	[TestFixture]
+	public class DeleteOneToOneOrphansTestByCode : DeleteOneToOneOrphansTest
+	{
+		protected override IList Mappings
+		{
+			get { return new string[0]; }
+		}
+		
+		protected override void AddMappings(Cfg.Configuration configuration)
+		{
+			var mapper = new ModelMapper();
+
+			mapper.Class<Employee>(mc =>
+			{
+				mc.Id(x => x.Id, m =>
+				{
+					m.Generator(Generators.Increment);
+					m.Column("Id");
+				});
+				mc.OneToOne<EmployeeInfo>(x => x.Info, map =>
+				{
+					map.Cascade(Mapping.ByCode.Cascade.All | Mapping.ByCode.Cascade.DeleteOrphans);
+					map.Constrained(false);
+				});
+				mc.Property(x => x.Name);
+			});
+
+			mapper.Class<EmployeeInfo>(mc =>
+			{
+				mc.Id(x => x.Id, map =>
+				{
+					map.Generator(Generators.Assigned);
+					map.Column("Id");
+				});
+			});
+			configuration.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
 		}
 	}
 }

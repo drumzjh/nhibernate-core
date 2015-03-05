@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Fk.Composite.Hbm
+namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Fk.Composite
 {
 	public class Employee
 	{

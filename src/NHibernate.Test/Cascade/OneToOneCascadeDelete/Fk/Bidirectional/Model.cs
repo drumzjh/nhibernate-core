@@ -1,15 +1,10 @@
-﻿namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Bidirectional.MappingByCode
+﻿namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Fk.Bidirectional
 {
 	public class Employee
 	{
 		public virtual long Id { get; set; }
 		public virtual string Name { get; set; }
 		public virtual EmployeeInfo Info { get; set; }
-
-		public Employee()
-		{
-
-		}
 	}
 
 	public class EmployeeInfo
@@ -19,12 +14,11 @@
 
 		public EmployeeInfo()
 		{
-
 		}
 
-		public EmployeeInfo(Employee employee)
+		public EmployeeInfo(Employee emp)
 		{
-			this.EmployeeDetails = employee;
+			EmployeeDetails = emp;
 		}
 	}
 }

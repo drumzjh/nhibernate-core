@@ -1,44 +1,15 @@
-using NHibernate.Cfg.MappingSchema;
+using System.Collections;
+using NHibernate.Cfg;
 using NHibernate.Mapping.ByCode;
 using NUnit.Framework;
 
-namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Bidirectional.MappingByCode
+namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Bidirectional
 {
-	public class DeleteOneToOneOrphansTest : TestCaseMappingByCode
+	public abstract class DeleteOneToOneOrphansTest : TestCase
 	{
-		protected override HbmMapping GetMappings()
+		protected override string MappingsAssembly
 		{
-			var mapper = new ModelMapper();
-
-			mapper.Class<Employee>(mc =>
-			{
-				mc.Id(x => x.Id, map =>
-				{
-					map.Generator(Generators.Identity);
-					map.Column("Id");
-				});
-				mc.OneToOne<EmployeeInfo>(x => x.Info, map =>
-				{
-					map.Cascade(Mapping.ByCode.Cascade.All | Mapping.ByCode.Cascade.DeleteOrphans);
-					map.Constrained(false);
-				});
-				mc.Property(x => x.Name);
-			});
-
-			mapper.Class<EmployeeInfo>(mc =>
-			{
-				mc.Id(x => x.Id, map =>
-				{
-					map.Generator(Generators.Foreign<EmployeeInfo>(x => x.EmployeeDetails));
-					map.Column("Id");
-				});
-				mc.OneToOne<Employee>(x => x.EmployeeDetails, map =>
-				{
-					map.Constrained(true);
-				});
-			});
-
-			return mapper.CompileMappingForAllExplicitlyAddedEntities();
+			get { return "NHibernate.Test"; }
 		}
 
 		protected override void OnSetUp()
@@ -107,6 +78,58 @@ namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Bidirectional.Mapping
 
 				tx.Commit();
 			}
+		}
+	}
+
+	[TestFixture]
+	public class DeleteOneToOneOrphansTestHbm : DeleteOneToOneOrphansTest
+	{
+		protected override IList Mappings
+		{
+			get { return new[] {"Cascade.OneToOneCascadeDelete.Pk.Bidirectional.Mappings.hbm.xml"}; }
+		}
+	}
+
+	[TestFixture]
+	public class DeleteOneToOneOrphansTestByCode : DeleteOneToOneOrphansTest
+	{
+		protected override IList Mappings
+		{
+			get { return new string[0]; }
+		}
+
+		protected override void AddMappings(Configuration configuration)
+		{
+			var mapper = new ModelMapper();
+
+			mapper.Class<Employee>(mc =>
+			{
+				mc.Id(x => x.Id, map =>
+				{
+					map.Generator(Generators.Increment);
+					map.Column("Id");
+				});
+				mc.OneToOne<EmployeeInfo>(x => x.Info, map =>
+				{
+					map.Cascade(Mapping.ByCode.Cascade.All | Mapping.ByCode.Cascade.DeleteOrphans);
+					map.Constrained(false);
+				});
+				mc.Property(x => x.Name);
+			});
+
+			mapper.Class<EmployeeInfo>(mc =>
+			{
+				mc.Id(x => x.Id, map =>
+				{
+					map.Generator(Generators.Foreign<EmployeeInfo>(x => x.EmployeeDetails));
+					map.Column("Id");
+				});
+				mc.OneToOne<Employee>(x => x.EmployeeDetails, map =>
+				{
+					map.Constrained(true);
+				});
+			});
+			configuration.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
 		}
 	}
 }

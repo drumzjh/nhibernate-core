@@ -1,4 +1,4 @@
-﻿namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Unidirectional.MappingByCode
+﻿namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Pk.Unidirectional
 {
 	public class Employee
 	{

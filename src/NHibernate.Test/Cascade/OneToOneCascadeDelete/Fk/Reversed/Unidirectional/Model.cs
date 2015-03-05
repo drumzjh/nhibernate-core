@@ -1,4 +1,4 @@
-﻿namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Fk.Bidirectional.Hbm
+﻿namespace NHibernate.Test.Cascade.OneToOneCascadeDelete.Fk.Reversed.Unidirectional
 {
 	public class Employee
 	{
@@ -8,21 +8,22 @@
 
 		public Employee()
 		{
+
 		}
 	}
 
 	public class EmployeeInfo
 	{
 		public virtual long Id { get; set; }
-		public virtual Employee EmployeeDetails { get; set; }
 
 		public EmployeeInfo()
 		{
+
 		}
 
-		public EmployeeInfo(Employee emp)
+		public EmployeeInfo(long id)
 		{
-			EmployeeDetails = emp;
+			this.Id = id;
 		}
 	}
 }
